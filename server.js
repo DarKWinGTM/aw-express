@@ -19,7 +19,7 @@ const port = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: false }));
 
 if (cluster.isMaster) {
-    for (let i = 0; i < (cpus.length * 1.0); i++) {
+    for (let i = 0; i < (cpus.length * 2.0); i++) {
         cluster.fork();
     }; 
     cluster.on('exit', (worker, code, signal) => {
