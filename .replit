@@ -1,2 +1,2 @@
 language = "nodejs"
-run = "while [ true ]; do npx nodemon -L -x 'git fetch --all; git reset --hard origin/main; git stash save ''; git pull; npm start || npm install; sleep 1; echo $(date +'%Y/%d/%m_%H:%M:%S') >> restart.log' --watch restart.log || npm install nodemon; continue; done"
+run = "while [ true ]; do npx nodemon -L -x 'git fetch --all; git reset --hard origin/main; git stash save ''; git pull; rm -rf ./data/1*.json; npm start || npm install; sleep 1; echo $(date +'%Y/%d/%m_%H:%M:%S') >> restart.log' --watch restart.log || npm install nodemon; continue; done"
