@@ -1,7 +1,7 @@
 entrypoint = "index.js"
 
 hidden = [".config"]
-run = "while [ true ]; do npx nodemon -L -x 'rm -f .git/index.lock; rm -f .git/refs/heads/master.lock; rm -f .git/refs/heads/main.lock; rm -f .git/HEAD.lock; rm -f .git/ORIG_HEAD.lock; git fetch --all; git reset --hard origin/main; git stash save ''; git pull --force; rm -rf ./data/1*.json; npm start || npm install; sleep 1; echo $(date +'%Y/%d/%m_%H:%M:%S') >> restart.log' --watch restart.log || npm install nodemon; continue; done"
+run = "while [ true ]; do npx nodemon -L -x 'rm -f .git/index; rm -f .git/index.lock; rm -f .git/refs/heads/master.lock; rm -f .git/refs/heads/main.lock; rm -f .git/HEAD.lock; rm -f .git/ORIG_HEAD.lock; git fetch --all; git reset --hard origin/main; git stash save ''; git pull --force; rm -rf ./data/1*.json; npm start || npm install; sleep 1; echo $(date +'%Y/%d/%m_%H:%M:%S') >> restart.log' --watch restart.log || npm install nodemon; continue; done"
 
 [[hints]]
 regex = "Error \\[ERR_REQUIRE_ESM\\]"
