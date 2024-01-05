@@ -1,6 +1,6 @@
 import * as mod from "https://deno.land/std@0.172.0/node/internal/cluster/cluster.ts";
-import * as mod from "https://deno.land/x/module_url/mod.ts";
-import * as mod from "https://deno.land/std@0.211.0/fs/mod.ts";
+import * as url from "https://deno.land/x/module_url/mod.ts";
+import * as fs from "https://deno.land/std@0.211.0/fs/mod.ts";
 import express from "npm:express@4.18.2";
 
 const app = express();
