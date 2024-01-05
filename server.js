@@ -1,4 +1,3 @@
-import fetch from 'node-fetch';
 import { cpus } from "https://deno.land/x/dos@v0.11.0/mod.ts";
 import * as cluster from "https://deno.land/std@0.110.0/node/cluster.ts";
 import * as url from "https://deno.land/x/module_url/mod.ts";
