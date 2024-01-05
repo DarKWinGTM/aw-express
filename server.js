@@ -32,21 +32,6 @@ if (Worker.isMaster) {
     }
   });
 } else {
-  if (
-    'waxaccount' in process.env &&
-    'difficulty' in process.env &&
-    'lastMineTx' in process.env &&
-    'timeticket' in process.env &&
-    process.env.waxaccount &&
-    process.env.difficulty &&
-    process.env.lastMineTx &&
-    process.env.timeticket &&
-    !process.env.waxaccount == '' &&
-    !process.env.difficulty == '' &&
-    !process.env.lastMineTx == '' &&
-    !process.env.timeticket == ''
-  ) {} else {
-
     app.get('/', (req, res) => {
       res.setHeader('Content-Type', 'text/html');
       res.write('<html>');
@@ -81,7 +66,6 @@ if (Worker.isMaster) {
     app.listen(port, () => {
       //  console.log(`Server is booming on port ${port} Visit http://localhost:${port}`);
     });
-  }
 }
 
 
