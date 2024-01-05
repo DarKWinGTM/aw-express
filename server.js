@@ -19,15 +19,15 @@ const port = 9999;
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-const timeticket: Record<string, number> = {};
+const timeticket = {};
 const platformgu = {
-  waxaccount: '',
-  timestamps: Date.now(),
+  'waxaccount': '',
+  'timestamps': Date.now(),
 };
 const requestpip = {
-  cosmicclashio: {
-    waxaccount: '',
-    timestamps: Date.now(),
+  'cosmicclashio': {
+    'waxaccount': '',
+    'timestamps': Date.now(),
   },
 };
 
@@ -35,12 +35,12 @@ if (cluster.isMaster) {
   for (let i = 0; i < 1; i++) {
     const worker = cluster.fork();
     worker.on('message', function (msg) {
-      console.log('Master recieve msg :', msg.chat);
+      console.log('Master receive msg :', msg.chat);
       cluster.fork({
-        waxaccount: JSON.parse(msg.chat)['waxaccount'],
-        difficulty: JSON.parse(msg.chat)['difficulty'],
-        lastMineTx: JSON.parse(msg.chat)['lastMineTx'],
-        timeticket: JSON.parse(msg.chat)['timeticket'],
+        'waxaccount': JSON.parse(msg.chat)['waxaccount'],
+        'difficulty': JSON.parse(msg.chat)['difficulty'],
+        'lastMineTx': JSON.parse(msg.chat)['lastMineTx'],
+        'timeticket': JSON.parse(msg.chat)['timeticket'],
       });
     });
   }
@@ -67,20 +67,20 @@ if (cluster.isMaster) {
     !process.env.timeticket == ''
   ) {
     guess({
-      waxaccount: process.env.waxaccount,
-      difficulty: process.env.difficulty,
-      lastMineTx: process.env.lastMineTx,
+      'waxaccount': process.env.waxaccount,
+      'difficulty': process.env.difficulty,
+      'lastMineTx': process.env.lastMineTx,
     }).then((result) => {
       try {
         fs.writeFile(
           `data/${process.env.timeticket}.json`,
           JSON.stringify({
-            waxaccount: process.env.waxaccount,
-            difficulty: process.env.difficulty,
-            lastMineTx: process.env.lastMineTx,
-            timeticket: process.env.timeticket,
-            result: result,
-            status: result['nonce'] ? 200 : 201,
+            'waxaccount': process.env.waxaccount,
+            'difficulty': process.env.difficulty,
+            'lastMineTx': process.env.lastMineTx,
+            'timeticket': process.env.timeticket,
+            'result': result,
+            'status': result['nonce'] ? 200 : 201,
           }),
           (err) => {
             if (err) {
@@ -91,9 +91,9 @@ if (cluster.isMaster) {
       } catch (err) {
         console.error(
           {
-            waxaccount: process.env.waxaccount,
-            difficulty: process.env.difficulty,
-            lastMineTx: process.env.lastMineTx,
+            'waxaccount': process.env.waxaccount,
+            'difficulty': process.env.difficulty,
+            'lastMineTx': process.env.lastMineTx,
           },
           process.env.timeticket,
           err
@@ -173,25 +173,25 @@ if (cluster.isMaster) {
         res.setHeader('timeticket', new Date().getTime());
         process.send({
           chat: JSON.stringify({
-            waxaccount: url.parse(req.url, true).query.waxaccount,
-            difficulty: url.parse(req.url, true).query.difficulty,
-            lastMineTx: url.parse(req.url, true).query.lastMineTx,
-            timeticket: res.getHeaders()['timeticket'],
+            'waxaccount': url.parse(req.url, true).query.waxaccount,
+            'difficulty': url.parse(req.url, true).query.difficulty,
+            'lastMineTx': url.parse(req.url, true).query.lastMineTx,
+            'timeticket': res.getHeaders()['timeticket'],
           }),
         });
         fs.writeFile(
           `data/${res.getHeaders()['timeticket']}.json`,
           JSON.stringify({
-            waxaccount: url.parse(req.url, true).query.waxaccount,
-            difficulty: url.parse(req.url, true).query.difficulty,
-            lastMineTx: url.parse(req.url, true).query.lastMineTx,
-            timeticket: res.getHeaders()['timeticket'],
-            result: {
+            'waxaccount': url.parse(req.url, true).query.waxaccount,
+            'difficulty': url.parse(req.url, true).query.difficulty,
+            'lastMineTx': url.parse(req.url, true).query.lastMineTx,
+            'timeticket': res.getHeaders()['timeticket'],
+            'result': {
               account: url.parse(req.url, true).query.waxaccount,
               nonce: '',
               answer: '',
             },
-            status: 400,
+            'status': 400,
           }),
           (err) => {
             if (err) {
@@ -207,7 +207,6 @@ if (cluster.isMaster) {
         res.send('?');
       }
     });
-
     app.get('/v1/call/:args', (req, res) => {
       if (req.params.args) {
         console.log(req.url);
@@ -246,9 +245,9 @@ if (cluster.isMaster) {
         console.log(req.url);
         console.log(url.parse(req.url, true).query.waxaccount);
         guess({
-          waxaccount: url.parse(req.url, true).query.waxaccount,
-          difficulty: url.parse(req.url, true).query.difficulty,
-          lastMineTx: url.parse(req.url, true).query.lastMineTx,
+          'waxaccount': url.parse(req.url, true).query.waxaccount,
+          'difficulty': url.parse(req.url, true).query.difficulty,
+          'lastMineTx': url.parse(req.url, true).query.lastMineTx,
         }).then((result) => {
           res.setHeader('Content-Type', 'application/json');
           res.end(JSON.stringify(result));
@@ -267,16 +266,8 @@ if (cluster.isMaster) {
 
 console.log(nodeType + ' #' + process.pid, 'is running');
 
-async function guess(DATA: {
-  waxaccount: string;
-  difficulty: string;
-  lastMineTx: string;
-}): Promise<{
-  account: string;
-  nonce: string;
-  answer: string;
-}> {
-  const nameToArray = (name: string): Uint8Array => {
+async function guess(DATA) {
+  const nameToArray = (name) => {
     const sb = new Serialize.SerialBuffer({
       textEncoder: new TextEncoder(),
       textDecoder: new TextDecoder(),
@@ -285,37 +276,34 @@ async function guess(DATA: {
     return sb.array;
   };
 
-  const getRand = (): Uint8Array => {
+  const getRand = () => {
     const arr = new Uint8Array(8);
     for (let i = 0; i < 8; i++) {
       arr[i] = (Math.random() * 256) >> 0;
     }
     return arr;
   };
-
-  const toHex = (buffer: Uint8Array): string => {
+  const toHex = (buffer) => {
     return [...new Uint8Array(buffer)]
       .map((b) => b.toString(16).padStart(2, '0'))
       .join('');
   };
-
-  const unHex = (hexed: string): Uint8Array => {
+  const unHex = (hexed) => {
     const arr = new Uint8Array(8);
     for (let i = 0; i < 8; i++) {
       arr[i] = parseInt(hexed.slice(i * 2, (i + 1) * 2), 16);
     }
     return arr;
   };
+  const fromHexString = (hexString) =>
+    new Uint8Array(hexString.match(/.{1,2}/g).map((byte) => parseInt(byte, 16)));
 
-  const fromHexString = (hexString: string): Uint8Array =>
-    new Uint8Array(hexString.match(/.{1,2}/g)!.map((byte) => parseInt(byte, 16)));
-
-  const mining_account = 'm.federation';
-  let account = nameToArray(DATA.waxaccount);
-  const account_str = DATA.waxaccount;
-  const difficulty = DATA.difficulty;
-  const last_mine_tx = DATA.lastMineTx.substr(0, 16);
-  const last_mine_arr = fromHexString(last_mine_tx);
+  var mining_account = 'm.federation';
+  var account = nameToArray(DATA.waxaccount);
+  var account_str = DATA.waxaccount;
+  var difficulty = DATA.difficulty;
+  var last_mine_tx = DATA.lastMineTx.substr(0, 16);
+  var last_mine_arr = fromHexString(last_mine_tx);
   console.log('NEW', last_mine_arr, last_mine_arr.length);
 
   account = account.slice(0, 8);
@@ -335,13 +323,17 @@ async function guess(DATA: {
     console.log(`Using WAM account`);
   }
 
-  const start = new Date().getTime();
-  let end = new Date().getTime();
+  var start = new Date().getTime();
+  var end = new Date().getTime();
 
   while (!good) {
+    //    for(;;){
+
     rand_arr = getRand();
 
-    const combined = new Uint8Array(account.length + last_mine_arr.length + rand_arr.length);
+    const combined = new Uint8Array(
+      account.length + last_mine_arr.length + rand_arr.length
+    );
     combined.set(account);
     combined.set(last_mine_arr, account.length);
     combined.set(rand_arr, account.length + last_mine_arr.length);
@@ -358,7 +350,9 @@ async function guess(DATA: {
     itr++;
 
     if (itr % 10000 === 0) {
-      console.log(`Still mining - tried ${itr} iterations ${((new Date().getTime() - start) / 1000).toFixed(2)}s`);
+      console.log(
+        `Still mining - tried ${itr} iterations ${((new Date().getTime() - start) / 1000).toFixed(2)}s`
+      );
       end = new Date().getTime();
     }
 
@@ -373,29 +367,37 @@ async function guess(DATA: {
 
   const rand_str = toHex(rand_arr);
 
-  console.log(`Found hash in ${itr} iterations with ${account} ${rand_str}, last = ${last}, hex_digest ${hex_digest} taking ${(end - start) / 1000}s`);
+  console.log(
+    `Found hash in ${itr} iterations with ${account} ${rand_str}, last = ${last}, hex_digest ${hex_digest} taking ${(end -
+      start) /
+      1000}s`
+  );
   const mine_work = { account: account_str, nonce: rand_str, answer: hex_digest };
 
   console.log(mine_work);
 
-  return new Promise((resolve, reject) => {
+  return new Promise(function (resolve, reject) {
     resolve({ account: account_str, nonce: rand_str, answer: hex_digest });
   });
 }
 
-function arrayToHex(data: Uint8Array): string {
+function arrayToHex(data) {
   let result = '';
   for (const x of data) {
     result += ('00' + x.toString(16)).slice(-2);
   }
   return result;
 }
-
-async function get_rawabi_and_abi(account: string) {
+async function get_rawabi_and_abi(account) {
   try {
     const endpoint = 'https://wax.blokcrafters.io';
     const rpc = new JsonRpc(endpoint, { fetch });
-    const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() });
+    const api = new Api({
+      rpc,
+      signatureProvider,
+      textDecoder: new TextDecoder(),
+      textEncoder: new TextEncoder(),
+    });
 
     const rawAbi = (await api.abiProvider.getRawAbi(account)).abi;
     const abi = await api.rawAbiToJson(rawAbi);
