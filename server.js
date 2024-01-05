@@ -1,12 +1,12 @@
-import * as cluster from "https://deno.land/std@0.110.0/node/cluster.ts";
+import { cluster } from "https://deno.land/std@0.151.0/node/cluster.ts";
 import * as url from "https://deno.land/x/module_url/mod.ts";
-import * as mod from "https://deno.land/std@0.211.0/fs/mod.ts";
+import * as fs from "https://deno.land/std@0.211.0/fs/mod.ts";
 import express from "npm:express@4.18.2";
 
 const app = express();
 const nodeType = cluster.isMaster ? 'Master' : 'Worker';
 
-const port = 9999;
+const port = 3000;
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
