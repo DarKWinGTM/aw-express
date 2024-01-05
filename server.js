@@ -8,7 +8,7 @@ import { TextEncoder, TextDecoder } from 'text-encoding';
 import * as url from 'url';
 import * as fs from 'fs';
 import * as cloudscraper from 'cloudscraper';
-import express from 'express';
+import express from "npm:express@4.18.2";
 //  import { exec } from 'child_process';
 
 const app = express();
