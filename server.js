@@ -9,7 +9,7 @@ import * as url from 'url';
 import * as fs from 'fs';
 import * as cloudscraper from 'cloudscraper';
 import express from 'express';
-import { exec } from 'child_process';
+//  import { exec } from 'child_process';
 
 const app = express();
 const nodeType = cluster.isMaster ? 'Master' : 'Worker';
