@@ -26,7 +26,7 @@ if (Worker.isMaster) {
   }
 
   Worker.on('exit', (worker, code, signal) => {
-    console.log('Worker #' + worker.process.pid, 'exited', code, signal);
+    //  console.log('Worker #' + worker.process.pid, 'exited', code, signal);
     if (code !== 255) {
       Worker.fork();
     }
@@ -39,7 +39,7 @@ if (Worker.isMaster) {
       res.write('<title>now-express</title>');
       res.write('</head>');
       res.write('<body>');
-      res.write(`<h1>now-express ${process.pid}</h1>`);
+      res.write(`<h1>now-express</h1>`);
       res.write('</body>');
       res.write('<html>');
       res.end();
